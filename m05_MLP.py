@@ -2,6 +2,7 @@
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import GridSearchCV, KFold
 
 import m01_Graphs as Gra
 
@@ -19,10 +20,32 @@ Xg_test  = Gra.X_test[:, :1]
 
 ###############################
 
-model = make_pipeline(
+pipeline = make_pipeline(
     StandardScaler(),
-    MLPRegressor(hidden_layer_sizes=(64, 32),max_iter=500,random_state=43)
+    MLPRegressor(random_state=43)
 )
+
+parameters = {
+    "mlpregressor__hidden_layer_sizes": [(32,), (64,), (64, 32)],
+    "mlpregressor__alpha": [0.0001, 0.01, 1.0],
+    "mlpregressor__max_iter": [500, 1000]
+}
+
+###################################
+
+search = GridSearchCV(
+    pipeline,
+    param_grid=parameters,
+    scoring="neg_mean_absolute_error",
+    cv=KFold(n_splits=5, shuffle=True, random_state=43),
+    n_jobs=-1,
+)
+
+search.fit(X_train, y_train)
+
+print("Best parameters:", search.best_params_)
+
+model = search.best_estimator_
 
 model.fit(X_train, y_train)
 
@@ -34,15 +57,24 @@ Gra.evaluate_model(y_test, y_pred, "MLP, whole spectrum")
 
 ##################################
 
-model = make_pipeline(
-    StandardScaler(),
-    MLPRegressor(hidden_layer_sizes=(64, 32),max_iter=500,random_state=43)
+gap_search = GridSearchCV(
+    pipeline,
+    param_grid=parameters,
+    scoring="neg_mean_absolute_error",
+    cv=KFold(n_splits=5, shuffle=True, random_state=43),
+    n_jobs=-1,
 )
 
-model.fit(Xg_train, y_train)
+gap_search.fit(Xg_train, y_train)
 
-yg_pred = model.predict(Xg_test)
+print("Best parameters:", gap_search.best_params_)
+
+gap_model = gap_search.best_estimator_
+
+yg_pred = gap_model.predict(Xg_test)
 
 print("We trained an MLP model with the spectral gap only.\n")
 
-Gra.evaluate_model(y_test, y_pred, "MLP, spectral gap only")
+Gra.evaluate_model(y_test, yg_pred, "MLP, spectral gap only")
+
+print("\n\n----------------------------\n\n")

@@ -40,7 +40,7 @@ def evaluate_model(y_true, y_pred, name="Model"):
         "MAE / range (%)": 100 * mae / target_range if target_range > 0 else np.nan,
         "RMSE / range (%)": 100 * rmse / target_range if target_range > 0 else np.nan,
     }
-    print(f"\n{name}")
+    print(f"\n{name}:")
     print("-" * 40)
     for metric, value in results.items():
         print(f"{metric:<22}{value:>18.6f}")

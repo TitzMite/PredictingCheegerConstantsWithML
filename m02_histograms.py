@@ -41,3 +41,5 @@ print("\n\n")
 print("cheeger constants histogram:\n")
 
 print_histogram(ch_counts, ch_bin_edges)
+
+print("\n\n----------------------------\n\n")
