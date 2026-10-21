@@ -16,13 +16,14 @@ X_gap    = Gra.X[:, 1]
 Xg_train = Gra.X_train[:, :1]
 Xg_test  = Gra.X_test[:, :1]
 
+###############
+
 n_estimators = 200
 random_state = 43
 
-model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
-gap_model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
+#######################
 
-###########################
+model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
 
 model.fit(X_train, y_train)
 
@@ -33,6 +34,8 @@ print("We trained a random forest model with the whole spectrum.\n")
 Gra.evaluate_model(y_test, y_pred, "Random Forest, whole spectrum")
 
 ###########################
+
+gap_model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
 
 gap_model.fit(Xg_train, y_train)
 

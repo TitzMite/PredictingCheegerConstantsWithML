@@ -17,6 +17,7 @@ X_gap    = Gra.X[:, 1]
 Xg_train = Gra.X_train[:, :1]
 Xg_test  = Gra.X_test[:, :1]
 
+##################
 
 model = make_pipeline(StandardScaler(), LinearRegression())
 
@@ -33,7 +34,6 @@ Gra.evaluate_model(y_test, y_pred, "Linear regression, whole spectrum")
 print("\n------------------------------\n")
 
 ########################
-
 
 gap_model = make_pipeline(StandardScaler(), LinearRegression())
 

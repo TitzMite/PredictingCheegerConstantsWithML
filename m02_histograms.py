@@ -32,12 +32,12 @@ def print_histogram(counts, bin_edges):
         percentage = 100 * count / total if total else 0
         print(f"{interval:<25}{count:>9,}{percentage:>9.2f}%")
 
-print("spectral gaps:\n")
+print("spectral gaps histogram:\n")
 
 print_histogram(sg_counts, sg_bin_edges)
 
 print("\n\n")
 
-print("cheeger constants:\n")
+print("cheeger constants histogram:\n")
 
 print_histogram(ch_counts, ch_bin_edges)
