@@ -234,14 +234,6 @@ SingerSets := function(G, q)
 end;
 
 
-#############################################################################
-# Returns all graphs admitting a Singer action by G
-# If a graph admits non-isomorphic Singer action, the graphs is
-# returned multiple times
-# If a list of non-isomorphic graphs is desired then run
-# GraphIsomorphismClassRepresentatives(..) afterwards
-#############################################################################
-
 SingerActions := function(G, q)
     local sets, graphs;
     Print("Computing Singer sets.\n");
@@ -253,11 +245,6 @@ SingerActions := function(G, q)
     sets := SingerSets(G, q);
     graphs := List(sets,set -> GraphDiffSet(G, set));
     Print("Constructed ",Length(graphs)," graphs.\n");
-    ###
-    Print("Filtering out graphs with small girth.\n");
-    graphs := Filtered(graphs, x->Girth(x) >=8);
-    Print("We now have ", Size(graphs), " graphs\n\n");
-    ###
     Print("Now computing a representative system\n");
     graphs := GraphIsomorphismClassRepresentatives(graphs);
     Print("We now have ", Size(graphs), " graphs\n\n");
@@ -292,7 +279,7 @@ SingerActionsAllGroupsOrderNoAbelian := function(n, q)
         G := groups[i];
         if IsAbelian(G) then
             Print("Group is Abelian and ignored. \n\n");
-        else
+        else   
             graphs := SingerActions(G, q);
             Print("Found ",Length(graphs)," graphs for group ",i,".\n");
             Append(allgraphs,graphs);
