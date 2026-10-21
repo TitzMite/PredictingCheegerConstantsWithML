@@ -264,16 +264,6 @@ SingerActions := function(G, q)
     return graphs;
 end;
 
-
-#############################################################################
-# SingerActionsAllGroupsOrder(n, q)
-# Runs SingerActions on every group of order n.
-# If a graph admits non-isomorphic Singer action, the graphs is
-# returned multiple times
-# If a list of non-isomorphic graphs is desired then run
-# GraphIsomorphismClassRepresentatives(..) afterwards
-#############################################################################
-
 SingerActionsAllGroupsOrder := function(n, q)
     local groups, k, allgraphs, i, G, graphs;
     groups := AllSmallGroups(n);
@@ -302,12 +292,11 @@ SingerActionsAllGroupsOrderNoAbelian := function(n, q)
         G := groups[i];
         if IsAbelian(G) then
             Print("Group is Abelian and ignored. \n\n");
-        else   
+        else
             graphs := SingerActions(G, q);
             Print("Found ",Length(graphs)," graphs for group ",i,".\n");
             Append(allgraphs,graphs);
             Print("Now computing a representative system for all graphs we found so far\n");
-            #
             allgraphs := GraphIsomorphismClassRepresentatives(allgraphs);
             Print("We now have ", Size(allgraphs), " graphs\n\n");
         fi;

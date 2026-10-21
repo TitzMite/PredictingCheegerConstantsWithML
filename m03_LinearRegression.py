@@ -13,7 +13,7 @@ X_train = Gra.X_train
 X_test  = Gra.X_test
 y_train = Gra.y_train
 y_test  = Gra.y_test
-X_gap    = Gra.X[:, 0]
+X_gap    = Gra.X[:, 1]
 Xg_train = Gra.X_train[:, :1]
 Xg_test  = Gra.X_test[:, :1]
 

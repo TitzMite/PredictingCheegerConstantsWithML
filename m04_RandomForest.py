@@ -12,9 +12,9 @@ X_train = Gra.X_train
 X_test  = Gra.X_test
 y_train = Gra.y_train
 y_test  = Gra.y_test
-X_gap    = Gra.X[:, 0]
-Xg_train = Gra.X_train[:, 0]
-Xg_test  = Gra.X_test[:, 0]
+X_gap    = Gra.X[:, 1]
+Xg_train = Gra.X_train[:, :1]
+Xg_test  = Gra.X_test[:, :1]
 
 n_estimators = 200
 random_state = 43
@@ -40,4 +40,4 @@ yg_pred = gap_model.predict(Xg_test)
 
 print("We trained a random forest model with only the spectral gap.\n")
 
-Gra.evaluate_model(y_test, y_pred, "Random Forest, spectral gap only")
+Gra.evaluate_model(y_test, yg_pred, "Random Forest, spectral gap only")
