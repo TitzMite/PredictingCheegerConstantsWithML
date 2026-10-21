@@ -85,7 +85,23 @@ Already for linear regression, using the spectrum reduces MAE by approximately 4
 
 The full-spectrum random forest achieves the best performance, with an MAE of approximately 0.00638 and R² of 0.918. Its MAE is approximately 30% lower than that of the gap-only random forest.
 
-We also inspect the linear regression coefficients. The largest standardized coefficients belong to $\lambda_2$ and $\lambda_3$. Since eigenvalues are correlated, coefficient magnitudes should not be interpreted as standalone measures of feature importance.
+We also inspect the linear regression coefficients. In the gap-only model, the fitted slope is approximately 0.4823, with an intercept of 0.0531. An increase of 0.01 in the spectral gap therefore corresponds to an increase of approximately 0.00482 in the predicted Cheeger estimate.
+
+In the spectrum model, the largest absolute standardized coefficients belong to $\lambda_2$ and $\lambda_3$, with opposite signs:
+
+| Eigenvalue | Standardized coefficient | Raw coefficient |
+|---|---:|---:|
+| $\lambda_2$ | 0.046073 | 0.917839 |
+| $\lambda_3$ | −0.020288 | −0.383860 |
+| $\lambda_8$ | 0.007580 | 0.296135 |
+| $\lambda_6$ | 0.007166 | 0.240565 |
+| $\lambda_7$ | −0.006868 | −0.237599 |
+
+Standardized coefficients express the predicted change associated with a one-training-standard-deviation increase in an eigenvalue, holding the other features fixed. Raw coefficients express the same relationship in the original eigenvalue units.
+
+The opposite signs of the two leading coefficients suggest that the fitted model uses both the spectral gap and its relationship to the next eigenvalue. Several other nearby eigenvalues also have coefficients with opposite signs, consistent with the model using contrasts in spectral shape.
+
+These are conditional relationships within the fitted model. In particular, the negative coefficient of $\lambda_3$ does not imply that $\lambda_3$ alone is negatively correlated with the Cheeger estimate. Since eigenvalues are correlated, coefficients can compensate for one another and may be unstable. Their magnitudes should therefore not be interpreted as standalone measures of feature importance or as evidence of an exact mathematical formula.
 
 ## Scope and limitations
 
